@@ -205,6 +205,26 @@ class EthernetConnection
       client.flush();
       client.println(message);
     }
+
+    void post(String host, int port, String data) {
+      //data: param1=value1&param2=value2
+        EthernetClient client = this->getEthernetClient();
+        String review = "dato1=1&dato2=2";
+        int hostLength = host.length() + 1; 
+        char server[hostLength];
+        host.toCharArray(server, hostLength);
+
+      if (client.connect(server, port)) {
+        client.println("POST /eth HTTP/1.1");
+        //client.println("Host: 192.168.88.254");
+        client.println("Content-Type: application/x-www-form-urlencoded");
+        client.print("Content-Length: ");
+        client.println(data.length());
+        client.println();
+        client.print(data);
+        Serial.println("test Sent");
+      }
+    }
 };
 
 #endif /*EthernetConnection_h*/
