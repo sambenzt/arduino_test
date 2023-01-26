@@ -28,7 +28,6 @@ String val = "0";
 
 void loop()
 {
-
   String line = ethernetConnection.readLine();
 
   if (line.length() == 0)
@@ -81,18 +80,23 @@ void loop()
 
   else if (command == "elevator")
   {
+    Serial.println("execute elevator");
+    DynamicJsonDocument res1(128);
+    String result1;
+    res1["code"] = "MSG251";
+    res1["command"] = "elevator";
+    res1["status"] = "ok";
+    serializeJson(res1, result1);
+    ethernetConnection.writeLine(result1);
+
     delay(10000);
-    DynamicJsonDocument res(128);
+    DynamicJsonDocument res2(128);
     String result;
     String value = doc["value"];
-    res["code"] = "MSG201";
-    res["command"] = "elevator-reaches-height";
-    serializeJson(res, result);
+    res2["code"] = "MSG201";
+    res2["command"] = "elevator-reaches-height";
+    serializeJson(res2, result);
     ethernetConnection.writeLine(result);
-
-    if(value == "1000") {
-       Serial.println("****************************");
-    }
     Serial.print("response: ");
     Serial.print("elevator-reaches-height ");
     Serial.println(value);
@@ -100,14 +104,23 @@ void loop()
 
   else if (command == "expend")
   {
+    Serial.println("execute expend");
+    DynamicJsonDocument res1(128);
+    String result1;
+    res1["code"] = "MSG552";
+    res1["command"] = "expend";
+    res1["status"] = "ok";
+    serializeJson(res1, result1);
+    ethernetConnection.writeLine(result1);
+
     delay(11000);
-    DynamicJsonDocument res(128);
+    DynamicJsonDocument res2(128);
     String result;
-    res["code"] = "MSG502";
-    res["command"] = "expended";
-    res["module"] = doc["module"];
-    res["quantity"] = doc["quantity"];
-    serializeJson(res, result);
+    res2["code"] = "MSG502";
+    res2["command"] = "expended";
+    res2["module"] = doc["module"];
+    res2["quantity"] = doc["quantity"];
+    serializeJson(res2, result);
     ethernetConnection.writeLine(result);
     Serial.print("response: ");
     Serial.println("expended");
@@ -115,12 +128,21 @@ void loop()
 
   else if (command == "conveyor")
   {
-    delay(12000);
-    DynamicJsonDocument res(128);
+    Serial.println("execute conveyor");
+    DynamicJsonDocument res1(128);
+    String result1;
+    res1["code"] = "MSG261";
+    res1["command"] = "conveyor";
+    res1["status"] = "ok";
+    serializeJson(res1, result1);
+    ethernetConnection.writeLine(result1);
+
+    delay(10000);
+    DynamicJsonDocument res2(128);
     String result;
-    res["code"] = "MSG202";
-    res["command"] = "conveyor-stop";
-    serializeJson(res, result);
+    res2["code"] = "MSG202";
+    res2["command"] = "conveyor-stop";
+    serializeJson(res2, result);
     ethernetConnection.writeLine(result);
     Serial.print("response: ");
     Serial.println("conveyor-stop");
