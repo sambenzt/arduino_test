@@ -81,20 +81,26 @@ void loop()
 
   else if (command == "elevator")
   {
-    delay(2000);
+    delay(10000);
     DynamicJsonDocument res(128);
     String result;
+    String value = doc["value"];
     res["code"] = "MSG201";
     res["command"] = "elevator-reaches-height";
     serializeJson(res, result);
     ethernetConnection.writeLine(result);
+
+    if(value == "1000") {
+       Serial.println("****************************");
+    }
     Serial.print("response: ");
-    Serial.println("elevator-reaches-height");
+    Serial.print("elevator-reaches-height ");
+    Serial.println(value);
   }
 
   else if (command == "expend")
   {
-    delay(4000);
+    delay(11000);
     DynamicJsonDocument res(128);
     String result;
     res["code"] = "MSG502";
@@ -109,7 +115,7 @@ void loop()
 
   else if (command == "conveyor")
   {
-    delay(4000);
+    delay(12000);
     DynamicJsonDocument res(128);
     String result;
     res["code"] = "MSG202";
