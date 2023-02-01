@@ -78,6 +78,51 @@ void loop()
     Serial.println("step-length");
   }
 
+  else if (command == "principal-door-open")
+  {
+    Serial.println("execute principal-door-open");
+    DynamicJsonDocument res1(128);
+    String result1;
+    res1["code"] = "MSG151";
+    res1["command"] = "principal-door-open";
+    res1["status"] = "ok";
+    serializeJson(res1, result1);
+    ethernetConnection.writeLine(result1);
+
+    delay(5000);
+    DynamicJsonDocument res2(128);
+    String result2;
+    res2["code"] = "MSG103";
+    res2["command"] = "principal-door";
+    res2["value"] = "opened";
+    serializeJson(res2, result2);
+    ethernetConnection.writeLine(result2);
+    Serial.print("response: ");
+    Serial.println("principal-door open");
+
+    delay(2000);
+    DynamicJsonDocument res3(128);
+    String result3;
+    res3["code"] = "MSG103";
+    res3["command"] = "principal-door";
+    res3["value"] = "closed";
+    serializeJson(res3, result3);
+    ethernetConnection.writeLine(result3);
+    Serial.print("response: ");
+    Serial.println("principal-door closed");
+
+    delay(2000);
+    DynamicJsonDocument res4(128);
+    String result4;
+    res4["code"] = "MSG102";
+    res4["command"] = "PIR";
+    res4["value"] = true;
+    serializeJson(res4, result4);
+    ethernetConnection.writeLine(result4);
+    Serial.print("response: ");
+    Serial.println("PIR true");
+  }
+  
   else if (command == "elevator")
   {
     Serial.println("execute elevator");
@@ -146,6 +191,28 @@ void loop()
     ethernetConnection.writeLine(result);
     Serial.print("response: ");
     Serial.println("conveyor-stop");
+
+    delay(5000);
+    DynamicJsonDocument res3(128);
+    String result2;
+    res3["code"] = "MSG103";
+    res3["command"] = "principal-door";
+    res3["value"] = "opened";
+    serializeJson(res3, result2);
+    ethernetConnection.writeLine(result2);
+    Serial.print("response: ");
+    Serial.println("principal-door open");
+
+    delay(2000);
+    DynamicJsonDocument res4(128);
+    String result3;
+    res4["code"] = "MSG103";
+    res4["command"] = "principal-door";
+    res4["value"] = "closed";
+    serializeJson(res4, result3);
+    ethernetConnection.writeLine(result3);
+    Serial.print("response: ");
+    Serial.println("principal-door closed");
   }
 
   ethernetConnection.maintain();
